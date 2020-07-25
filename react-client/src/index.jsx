@@ -1,37 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import List from './components/List.jsx';
+import Workouts from './components/Workouts.jsx';
 
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: []
-    }
-  }
+function App() {
+  const [ workout, setWorkout ] = useState();
 
-  componentDidMount() {
+
+  useEffect (()=> {
     $.ajax({
       url: '/items',
       success: (data) => {
-        this.setState({
-          items: data
-        })
+        setItems([...items, data])
       },
       error: (err) => {
         console.log('err', err);
       }
     });
+  })
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    console.log(`Working ${e.target.name}`)
   }
 
-  render () {
-    return (<div>
-      <h1>Form Check</h1>
-      <List items={this.state.items}/>
-    </div>)
-  }
+  return (
+  <div>
+    <h1>Form Check</h1>
+    <Workouts name="shoulders" onClick={handleClick} items={items}/>
+  </div>)
+
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
