@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import ListItem from './ListItem.jsx';
 
 const Workouts = (props) => (
   <div>

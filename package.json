@@ -29,6 +29,9 @@
     "nodemon": "^2.0.4",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
-    "react-youtube": "^7.11.3"
+    "react-posenet": "^0.1.7",
+    "react-video-recorder": "^3.17.1",
+    "react-youtube": "^7.11.3",
+    "styled-components": "^5.1.1"
   }
 }
