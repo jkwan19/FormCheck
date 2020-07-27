@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/progress');
+mongoose.connect('mongodb://localhost/progress', {useNewUrlParser: true});
 
 var db = mongoose.connection;
 
@@ -26,8 +26,6 @@ var selectAll = function(callback) {
     } else {
       callback(null, progressions);
     }
-  }).then(() => {
-    db.close();
   })
 };
 

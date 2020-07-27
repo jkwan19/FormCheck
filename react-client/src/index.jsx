@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown'
-import $ from 'jquery';
+import Dropdown from 'react-bootstrap/Dropdown';
+import axios from 'axios';
 import Workouts from './components/Workouts.jsx';
 import Shoulders from './components/Shoulders.jsx';
 import Planks from './components/Planks.jsx';
@@ -46,25 +46,25 @@ function App() {
   const handleSelect = (e) => {
     setValue(e);
   }
-
   useEffect (()=> {
-    $.ajax({
-      url: '/progress',
-      success: (data) => {
-        setProgress([...progress, data])
-      },
-      error: (err) => {
-        console.log('err', err);
-      }
-    });
+    getProgressList();
   })
+
+  const getProgressList = () => {
+    axios.get('/progress')
+      .then(res => {
+        setProgress([res.data]);
+      })
+      .catch(err => console.log('err', err));
+  }
 
   const handleClick = (e) => {
     e.preventDefault();
     setWorkout(e.target.name);
     setValue('');
   }
-
+  // let shouldersProgress = progress.filter((data) => data.workout.includes("Shoulders"));
+  // let planksProgress = progress.filter((data) => data.workout.includes("Planks"));
   const renderView = () => {
     if (workouts === "shoulders") {
       return <Shoulders />
@@ -96,6 +96,7 @@ function App() {
         onSelect = {handleSelect}
         >
           <Dropdown.Item eventKey="Shoulder Press">Shoulder Press</Dropdown.Item>
+          <Dropdown.Divider />
           <Dropdown.Item eventKey="Planks">Planks</Dropdown.Item>
       </DropdownButton>
     </Header>

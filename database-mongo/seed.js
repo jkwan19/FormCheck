@@ -1,14 +1,20 @@
 const db = require('./index.js');
 const faker = require('faker');
+const moment = require('moment');
 
 const progressData = [];
 const generateData = (end = 1) => {
   for (let i = 0; i <= end; i++) {
-    let workout = ["Shoulders", "Planks"];
-    let randomWorkout = Math.floor(Math.random() * workout.length) + 0
     progressData.push({
-      workout: workout[randomWorkout],
-      date_posted: faker.date.past(),
+      workout: "Shoulders",
+      date_posted: moment().calendar(null, {
+        sameDay: '[Today]',
+        nextDay: '[Tomorrow]',
+        nextWeek: 'dddd',
+        lastDay: '[Yesterday]',
+        lastWeek: '[Last] dddd',
+        sameElse: 'DD/MM/YYYY'
+    }),
       imageUrl: faker.image.imageUrl()
     })
   }
