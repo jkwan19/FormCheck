@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import YouTube from 'react-youtube';
 import CheckForm from './CheckForm.jsx';
 
-function Shoulders () {
+function Shoulders (props) {
   const [ form, setForm ] = useState(false);
+  const [ workout, setWorkout ] = useState("Shoulder Press");
   const opts = {
     height: '300',
     width: '540',
@@ -25,13 +26,13 @@ function Shoulders () {
 
   const renderView = () => {
     if (form === true) {
-      return <CheckForm key="shoulders"/>
+      return <CheckForm workout={workout}/>
     } else {
       return (
         <div>
           <h2>Dumbbell Shoulder Press Demo</h2>
           <YouTube videoId="B-aVuyhvLHU" opts={opts} onReady={onReady}/>
-          <button onClick={handleClick}> Check My Form </button>
+          <button onClick={handleClick} > Check My Form </button>
         </div>
       )
     }

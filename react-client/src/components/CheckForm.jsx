@@ -6,12 +6,13 @@ const inferenceConfig = {
   decodingMethod: "single-person"
 };
 
-function CheckForm () {
+function CheckForm (props) {
   const [count, checkPoses] = Camera();
   const onEstimate = useCallback(poses => checkPoses(poses), [checkPoses]);
+  const workout = props.workout;
   return (
     <div>
-      <h1>{`Shoulder press count: ${count}`}</h1>
+      <h1>{`${workout}: ${count}`}</h1>
       <PoseNet
         style={{ width: "50%" }}
         facingMode="environment"

@@ -1,4 +1,4 @@
-import React, { useRef, useReducer, useCallback, useState } from "react"
+import React, { useRef, useReducer, useCallback, useState, useEffect } from "react"
 
 function getKeypointsObject(pose) {
   return pose.keypoints.reduce((acc, { part, position }) => {
@@ -18,12 +18,16 @@ export default function(sensitivity = 10) {
   const [count, dispatch] = useReducer(reducer, 0);
   const [isComingDown, setComingDown] = useState(false);
   const standard = useRef(0);
+  let isUp;
   // const goingUp = () => {
   //   setComingDown(true);
   // }
   // const goingDown = () => {
   //   setComingDown(false);
   // }
+  useEffect(() => {
+    setComingDown(isUp === true)
+  }, [isUp]);
   const checkPoses = useCallback(
     poses => {
       if (poses.length !== 1) {
@@ -48,17 +52,16 @@ export default function(sensitivity = 10) {
 
       if (wrist && up) {
         // goingUp();
-        setComingDown(true);
+        isUp = true;
         console.log('up', isComingDown);
         standard.current = Math.max(standard.current, elbow.y);
         return;
       }
       const down = standard.current < (elbow.y + sensitivity);
-      console.log(down, isComingDown, !!wrist, 'test down')
       if ((down && isComingDown) && !!wrist) {
         console.log('down');
         // goingDown();
-        setComingDown(false);
+        isUp = false;
         dispatch("increment");
         standard.current = 0
         return;

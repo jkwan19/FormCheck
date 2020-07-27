@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://localhost/progress');
 
 var db = mongoose.connection;
 
@@ -11,21 +11,25 @@ db.once('open', function() {
   console.log('mongoose connected successfully');
 });
 
-var itemSchema = mongoose.Schema({
-  quantity: Number,
-  description: String
+var progressSchema = mongoose.Schema({
+  workout: String,
+  date_posted: String,
+  imageUrl: String
 });
 
-var Item = mongoose.model('Item', itemSchema);
+var Progress = mongoose.model('Progress', progressSchema);
 
 var selectAll = function(callback) {
-  Item.find({}, function(err, items) {
+  Progress.find({}, function(err, progressions) {
     if(err) {
       callback(err, null);
     } else {
-      callback(null, items);
+      callback(null, progressions);
     }
-  });
+  }).then(() => {
+    db.close();
+  })
 };
 
+module.exports.Progress = Progress;
 module.exports.selectAll = selectAll;
