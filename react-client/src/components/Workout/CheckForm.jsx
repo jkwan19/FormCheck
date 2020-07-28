@@ -32,7 +32,7 @@ function CheckForm(props) {
     } else if (isGoodForm == false) {
       return (<Message>{improvementMessage[randomizer(improvementMessage)]}</Message>)
     } else {
-      return (<Message>{`Ready to rock`}</Message>)
+      return (<Message>{`Let's burn some calories`}</Message>)
     }
   }
   return (

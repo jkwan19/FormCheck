@@ -21,6 +21,7 @@ const Wrapper = styled("div")`
   overflow: hidden;
   background-color: #8d99ae;
 `;
+/* Header */
 
 const Title = styled("a")`
   float: left;
@@ -140,6 +141,7 @@ function App() {
     setValue(e.currentTarget.textContent);
     setWorkout('');
   }
+
   /* Handle Workout Routine */
   const handleClick = (e) => {
     e.preventDefault();
@@ -149,6 +151,11 @@ function App() {
     setProgressOpen(false);
   }
 
+  /* Handle Submit Form */
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+  }
   const openWorkout = () => {
     setWorkoutOpen(!isWorkoutOpen);
     setProgressOpen(false);
@@ -162,7 +169,7 @@ function App() {
   useEffect (()=> {
     getProgressList();
   })
-
+  /* Get list of progress */
   const getProgressList = () => {
     axios.get('/progress')
       .then(res => {
@@ -171,7 +178,10 @@ function App() {
       .catch(err => console.log('err', err));
   }
 
-
+  /* Add to progress tracker */
+  const addToProgressList = () => {
+    axios.post('/progress')
+  }
   /* Render View */
 
   const renderView = () => {
@@ -211,7 +221,6 @@ function App() {
               <ListItem onClick={handleClick}>Planks</ListItem>
               <ListItem onClick={handleClick}>Sleeping</ListItem>
             </DropDownList>
-
           )}
         </DropDownContainer>
         <ProgressContainer>

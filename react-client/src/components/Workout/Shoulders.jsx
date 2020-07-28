@@ -17,6 +17,11 @@ const Button = styled("div")`
     cursor: pointer;
   }
 `;
+
+const VideoContainer = styled("div")`
+  text-align: center;
+  margin: auto;
+`
 function Shoulders (props) {
   const [ form, setForm ] = useState(false);
   const [ workout, setWorkout ] = useState("Shoulder Press");
@@ -46,7 +51,9 @@ function Shoulders (props) {
       return (
         <Wrapper>
           <Header>Dumbbell Shoulder Press Demo</Header>
-          <YouTube videoId="B-aVuyhvLHU" opts={opts} onReady={onReady}/>
+          <VideoContainer>
+            <YouTube videoId="B-aVuyhvLHU" opts={opts} onReady={onReady}/>
+          </VideoContainer>
           <Button onClick={handleClick} > Check My Form </Button>
         </Wrapper>
       )

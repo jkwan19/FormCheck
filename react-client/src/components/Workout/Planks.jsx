@@ -17,6 +17,10 @@ const Button = styled("div")`
     cursor: pointer;
   }
 `;
+const VideoContainer = styled("div")`
+  text-align: center;
+  margin: auto;
+`
 
 function Planks (props) {
   const [ form, setForm ] = useState(false);
@@ -44,7 +48,9 @@ function Planks (props) {
       return (
         <Wrapper>
           <Header>Planks Demo</Header>
-          <YouTube videoId="pSHjTRCQxIw" opts={opts} onReady={onReady}/>
+          <VideoContainer>
+            <YouTube videoId="pSHjTRCQxIw" opts={opts} onReady={onReady}/>
+          </VideoContainer>
           <Button onClick={handleClick} > Check My Form </Button>
         </Wrapper>
       )
