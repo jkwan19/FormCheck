@@ -7,7 +7,7 @@ function Planks (props) {
   const [ workout, setWorkout ] = useState("Planks");
   const opts = {
     height: '300',
-    width: '540',
+    width: '510',
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
       autoplay: 1,

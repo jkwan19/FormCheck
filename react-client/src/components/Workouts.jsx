@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-const Workouts = (props) => (
-  <div>
-    <h4> What are we working on today? </h4>
-    <button name="shoulders" onClick={props.onClick}>Dumbbell Shoulder Press</button>
-    <button name="planks"  onClick={props.onClick}>Planks</button>
-    <button name="sleeping" onClick={props.onClick}>Sleeping</button>
-  </div>
+const Wrapper = styled("div")`
+`;
+const Header = styled("h4")`
+`;
+const Body = styled("p")`
+`;
+const Workouts = () => (
+  <Wrapper>
+    <Header> Welcome to Form Check! </Header>
+    <Body> Form Check is a great way to count your reps and executing them to perfection, while avoiding injuries.</Body>
+    <Body> What would you like to do today? Please refer to the navigation bar above! </Body>
+  </Wrapper>
 )
 
 export default Workouts;

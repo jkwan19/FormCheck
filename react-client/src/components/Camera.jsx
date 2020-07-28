@@ -12,6 +12,7 @@ function reducer(count, action) {
   }
   return count + 1;
 }
+let isGoodForm;
 function Camera (sensitivity = 10) {
   const [count, dispatch] = useReducer(reducer, 0);
   const standard = useRef(0);
@@ -52,7 +53,7 @@ function Camera (sensitivity = 10) {
       }
       const down = standard.current < (elbow.y + sensitivity);
       const downRange = (bodyPosition) => {
-        return (300 <= Math.floor(bodyPosition) <= 340);
+        return (300 <= Math.floor(bodyPosition) <= 360);
       };
       const tooLow = (bodyPosition) => {
         return (bodyPosition > 340);
@@ -64,6 +65,7 @@ function Camera (sensitivity = 10) {
         //shoulder and elbow need to be in range of 300 => 320
         if (downRange(shoulder.y) && downRange(elbow.y)) {
           console.log('looking good');
+          isGoodForm = true;
         }
 
         standard.current = 0
@@ -71,6 +73,7 @@ function Camera (sensitivity = 10) {
       }
       if (tooLow(elbow.y) && !isComingDown && !!wrist) {
         console.log('too low');
+        isGoodForm = false;
       }
       const rest = !wrist;
       if (rest) {
@@ -81,7 +84,7 @@ function Camera (sensitivity = 10) {
   );
   return [count, checkPoses];
 }
-export default Camera;
+export {Camera, isGoodForm};
 // export default function(sensitivity = 10) {
 //   const [count, dispatch] = useReducer(reducer, 0);
 //   const [isComingDown, setComingDown] = useState(false);
