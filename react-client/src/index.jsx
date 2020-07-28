@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Workouts from './components/Workouts.jsx';
-import Shoulders from './components/Shoulders.jsx';
-import Planks from './components/Planks.jsx';
-import Sleeping from './components/Sleeping.jsx';
-import ShouldersProgress from './components/ShouldersProgress.jsx';
-import PlanksProgress from './components/PlanksProgress.jsx';
+import Shoulders from './components/Workout/Shoulders.jsx';
+import Planks from './components/Workout/Planks.jsx';
+import Sleeping from './components/Workout/Sleeping.jsx';
+import ShouldersProgress from './components/Progress/Shoulders.jsx';
+import PlanksProgress from './components/Progress/Planks.jsx';
+import ProgressForm from './components/Form/ProgressForm.jsx';
 import styled, { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
@@ -103,6 +104,7 @@ const ListItem = styled("a")`
   text-align: left;
   &:hover{
     cursor: pointer;
+    color: white;
     background-color: grey;
   }
 `;
@@ -121,7 +123,10 @@ const Main = styled("div")`
   font-size: 1.2em;
 `;
 const Content = styled("div")``;
-
+/* Motivational Image */
+const Image = styled("img")`
+  width: 100%;
+`
 /* App function */
 function App() {
   const [ workouts, setWorkout ] = useState('');
@@ -130,12 +135,12 @@ function App() {
   const [ isWorkoutOpen, setWorkoutOpen ] = useState(false);
   const [ isProgressOpen, setProgressOpen ] = useState(false);
 
+  /* Select Progress List */
   const handleSelect = (e) => {
-    console.log(e.currentTarget.textContent, 'click progress')
     setValue(e.currentTarget.textContent);
     setWorkout('');
   }
-
+  /* Handle Workout Routine */
   const handleClick = (e) => {
     e.preventDefault();
     setWorkout(e.currentTarget.textContent);
@@ -143,6 +148,17 @@ function App() {
     setWorkoutOpen(false);
     setProgressOpen(false);
   }
+
+  const openWorkout = () => {
+    setWorkoutOpen(!isWorkoutOpen);
+    setProgressOpen(false);
+  };
+
+  const openProgress = () => {
+    setProgressOpen(!isProgressOpen);
+    setWorkoutOpen(false);
+  };
+
   useEffect (()=> {
     getProgressList();
   })
@@ -155,15 +171,6 @@ function App() {
       .catch(err => console.log('err', err));
   }
 
-  const openWorkout = () => {
-    setWorkoutOpen(!isWorkoutOpen);
-    setProgressOpen(false);
-  };
-
-  const openProgress = () => {
-    setProgressOpen(!isProgressOpen);
-    setWorkoutOpen(false);
-  };
 
   /* Render View */
 
@@ -178,10 +185,13 @@ function App() {
       return <ShouldersProgress progress={progress}/>
     } else if (value === "Planks") {
       return <PlanksProgress progress={progress}/>
+    } else if (value === "Add Progress") {
+      return <ProgressForm />
     } else {
       return (
         <div>
           <Workouts onClick={handleClick}/>
+          <Image src="http://www.gymquotes.co/wp-content/uploads/2017/11/push-yourself-to-your-limits-thats-how-you-truly-grow-motivational-gym-quotes.jpg"></Image>
         </div>
       )
     }
@@ -212,13 +222,13 @@ function App() {
               <ListItem onClick={handleSelect}>Planks</ListItem>
             </DropDownList>
           )}
-      </ProgressContainer>
+        </ProgressContainer>
+        <Title onClick={handleSelect}>Add Progress</Title>
       </Header>
     </Wrapper>
     <Main>
     {renderView()}
     </Main>
-
   </Content>
   )
 }
