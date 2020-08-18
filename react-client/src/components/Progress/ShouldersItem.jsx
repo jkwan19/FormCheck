@@ -1,12 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
+
+const Items = styled('ul')`
+  float: left;
+  width: 40%;
+`
+const Date = styled('div')`
+  float: left;
+`
+
+const Image = styled('img')`
+  float: left;
+`
 
 function ShouldersProgressItem (props) {
+  let date = moment(props.item.createdAt).calendar();
   return (
-    <ul>
-      <div>{props.item.date_posted}</div>
-        <img src={props.item.imageUrl}></img>
-    </ul>
+    <Items>
+      <Date>{date}</Date>
+        <Image src={props.item.imageUrl}></Image>
+    </Items>
   )
 }
 

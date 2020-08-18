@@ -140,22 +140,16 @@ function App() {
   const handleSelect = (e) => {
     setValue(e.currentTarget.textContent);
     setWorkout('');
+    setProgressOpen(false);
   }
 
   /* Handle Workout Routine */
   const handleClick = (e) => {
-    e.preventDefault();
     setWorkout(e.currentTarget.textContent);
     setValue('');
     setWorkoutOpen(false);
-    setProgressOpen(false);
   }
 
-  /* Handle Submit Form */
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-  }
   const openWorkout = () => {
     setWorkoutOpen(!isWorkoutOpen);
     setProgressOpen(false);
@@ -179,9 +173,9 @@ function App() {
   }
 
   /* Add to progress tracker */
-  const addToProgressList = () => {
-    axios.post('/progress')
-  }
+  // const addToProgressList = () => {
+  //   axios.post('/progress')
+  // }
   /* Render View */
 
   const renderView = () => {

@@ -1,3 +1,4 @@
+const moment = require('moment');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/progress', {useNewUrlParser: true});
 
@@ -11,23 +12,15 @@ db.once('open', function() {
   console.log('mongoose connected successfully');
 });
 
-var progressSchema = mongoose.Schema({
-  workout: String,
-  date_posted: String,
-  imageUrl: String
-});
+var progressSchema = new mongoose.Schema({
+  workout: {type: String, required: true},
+  imageUrl: {type: String, required: true}
+  },
+  {
+    timestamps: true
+  }
+);
 
 var Progress = mongoose.model('Progress', progressSchema);
 
-var selectAll = function(callback) {
-  Progress.find({}, function(err, progressions) {
-    if(err) {
-      callback(err, null);
-    } else {
-      callback(null, progressions);
-    }
-  })
-};
-
-module.exports.Progress = Progress;
-module.exports.selectAll = selectAll;
+module.exports = Progress;

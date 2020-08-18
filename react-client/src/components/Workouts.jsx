@@ -7,6 +7,7 @@ const Header = styled("h4")`
 `;
 const Body = styled("p")`
 `;
+
 const Workouts = () => (
   <Wrapper>
     <Header> Welcome to Form Check! </Header>

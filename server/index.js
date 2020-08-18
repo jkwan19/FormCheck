@@ -2,26 +2,52 @@ var express = require('express');
 var bodyParser = require('body-parser');
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
 // var items = require('../database-mysql');
-var progressions = require('../database-mongo');
-
+var Progress = require('../database-mongo/index.js');
 var app = express();
 
-// UNCOMMENT FOR REACT
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
 app.use(express.static(__dirname + '/../react-client/dist'));
 
-// UNCOMMENT FOR ANGULAR
-// app.use(express.static(__dirname + '/../angular-client'));
-// app.use(express.static(__dirname + '/../node_modules'));
-
 app.get('/progress', function (req, res) {
-  progressions.selectAll(function(err, data) {
+  const selectAll = (callback) => {
+    Progress.find({}, function(err, data) {
+      if(err) {
+        res.sendStatus(500);
+      } else {
+        res.json(data);
+      }
+    })
+  };
+  selectAll(function(err, progression) {
     if(err) {
-      res.sendStatus(500);
+      console.log('error getting data: ', progression)
     } else {
-      res.json(data);
+      console.log('success')
     }
   });
 });
+
+app.post('/progress', function (req, res) {
+  let progress = new Progress(req.body);
+  const create = ((callback) => {
+    progress.save((err, data) => {
+      if (err) {
+        console.log('error posting:', err);
+      } else {
+        res.send(data)
+      }
+    })
+  })
+  create((err, data) => {
+    if (err) {
+      res.sendStatus(500)
+    } else {
+      console.log('posted')
+    }
+  })
+})
 
 app.listen(3000, function() {
   console.log('listening on port 3000!');

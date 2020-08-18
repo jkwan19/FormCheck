@@ -14,23 +14,18 @@ const inferenceConfig = {
   decodingMethod: "single-person"
 };
 
-const randomizer = (array) => {
-  let max = array.length;
-  return Math.floor(Math.random() * (max));
-}
-
 function CheckForm(props) {
   const [count, checkPoses] = Camera();
 
   const onEstimate = useCallback(poses => checkPoses(poses), [checkPoses]);
   const workout = props.workout;
-  const positiveMessage = [`Great work`];
-  const improvementMessage = [`Elbows need to be leveled`];
+  const positiveMessage = `Great work`;
+  const improvementMessage = `Elbows need to be leveled`;
   const renderMessage = () => {
     if (isGoodForm) {
-      return (<Message>{positiveMessage[randomizer(positiveMessage)]}</Message>)
+      return (<Message>{positiveMessage}</Message>)
     } else if (isGoodForm == false) {
-      return (<Message>{improvementMessage[randomizer(improvementMessage)]}</Message>)
+      return (<Message>{improvementMessage}</Message>)
     } else {
       return (<Message>{`Let's burn some calories`}</Message>)
     }
