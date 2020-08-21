@@ -4,29 +4,36 @@ import axios from 'axios';
 
 const Wrapper = styled('div')``;
 function ProgressForm (props) {
-  const [selectedFile, setSelectedFile] = useState(null);
+  // const [selectedFile, setSelectedFile] = useState(null);
+  const [title, setTitle] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
 
-  const fileChangedHandler = (e) => {
-    setSelectedFile(e.target.files[0]);
+  const titleHandler = (e) => {
+    setTitle(e.target.value);
   }
 
-  const uploadHandler = () => {
-    const formData = new FormData()
-    formData.append(
-      'myFile',
-      selectedFile,
-      selectedFile.name
-    )
-    axios.post('my-domain.com/file-upload', formData, {
-      onUploadProgress: progressEvent => {
-        console.log(progressEvent.loaded / progressEvent.total)
-      }
-    })
+  const imageHandler = (e) => {
+    setImageUrl(e.target.value);
   }
+
+  const uploadHandler = (e) => {
+    e.preventDefault();
+    let formData = {
+      workout: title,
+      imageUrl: imageUrl
+    }
+    props.handleForm(formData);
+    setTitle('');
+    setImageUrl('');
+  }
+
   return (
     <Wrapper>
-      <input type="file" onChange={fileChangedHandler}/>
-      <button onClick={uploadHandler}>Upload!</button>
+      <form onSubmit={uploadHandler}>
+        Workout: <input type="text" onChange={titleHandler}/>
+        Image: <input type="text" onChange={imageHandler}/>
+        <button type="submit">Upload!</button>
+      </form>
     </Wrapper>
     )
 }

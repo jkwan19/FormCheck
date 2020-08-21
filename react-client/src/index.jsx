@@ -173,9 +173,11 @@ function App() {
   }
 
   /* Add to progress tracker */
-  // const addToProgressList = () => {
-  //   axios.post('/progress')
-  // }
+  const addToProgressList = (data) => {
+    axios.post('/progress', data)
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err))
+  }
   /* Render View */
 
   const renderView = () => {
@@ -190,7 +192,7 @@ function App() {
     } else if (value === "Planks") {
       return <PlanksProgress progress={progress}/>
     } else if (value === "Add Progress") {
-      return <ProgressForm />
+      return <ProgressForm handleForm={addToProgressList}/>
     } else {
       return (
         <div>
