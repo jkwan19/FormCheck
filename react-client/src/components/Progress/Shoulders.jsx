@@ -8,6 +8,7 @@ const List = styled("ul") `
 `;
 function Shoulders (props) {
   let progressList = props.progress[0];
+  progressList = progressList.filter(progress => progress.workout === "Shoulders");
   return(
     <Wrapper>
       Shoulder Press Progress:

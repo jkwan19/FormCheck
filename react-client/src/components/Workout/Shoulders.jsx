@@ -21,7 +21,7 @@ const Button = styled("div")`
 const VideoContainer = styled("div")`
   text-align: center;
   margin: auto;
-`
+`;
 function Shoulders (props) {
   const [ form, setForm ] = useState(false);
   const [ workout, setWorkout ] = useState("Shoulder Press");
