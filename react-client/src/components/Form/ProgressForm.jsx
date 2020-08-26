@@ -9,6 +9,21 @@ const GlobalStyles = createGlobalStyle`
   }`
 
 const Wrapper = styled('div')``;
+const Form = styled('form')``;
+const Button = styled('button')`
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover {
+    background-color: #45a049;
+    color: white;
+  }
+`;
 const Input = styled('input')`
   width: 100%;
   padding: 12px 20px;
@@ -18,6 +33,7 @@ const Input = styled('input')`
   border-radius: 4px;
   box-sizing: border-box;
 `;
+const Options = styled('option')``;
 const Dropdown = styled('select')`
   width: 100%;
   padding: 12px 20px;
@@ -55,15 +71,15 @@ function ProgressForm (props) {
   return (
     <Wrapper>
       <GlobalStyles />
-      <form onSubmit={uploadHandler}>
+      <Form onSubmit={uploadHandler}>
         Workout:
         <Dropdown onChange={titleHandler}>
-          <option value="Shoulders">Shoulders</option>
-          <option value="Planks">Planks</option>
+          <Options value="Shoulders">Shoulders</Options>
+          <Options value="Planks">Planks</Options>
         </Dropdown>
         Image: <Input type="text" onChange={imageHandler} placeholder="Link..."/>
-        <button type="submit">Upload!</button>
-      </form>
+        <Button type="submit">Upload!</Button>
+      </Form>
     </Wrapper>
     )
 }
