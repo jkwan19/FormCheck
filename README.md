@@ -1,5 +1,6 @@
 # Form Check #
 
+Workout repetition and form tracker to ensure athletes will have a quality and injury-free workout session. (React, Node.js, Express.js, MongoDB, PoseNet)
 <!--
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
 
