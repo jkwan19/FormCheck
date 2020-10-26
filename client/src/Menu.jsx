@@ -1,4 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+import Greeting from './components/Greeting.jsx';
+import Shoulders from './components/Workout/Shoulders.jsx';
+import Planks from './components/Workout/Planks.jsx';
+import Sleeping from './components/Workout/Sleeping.jsx';
+import ShouldersProgress from './components/Progress/Shoulders.jsx';
+import PlanksProgress from './components/Progress/Planks.jsx';
+import ProgressForm from './components/Form/ProgressForm.jsx';
+import styled, { createGlobalStyle } from 'styled-components';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -83,10 +92,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Menu() {
+function Menu() {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [ workouts, setWorkout ] = useState('');
+  const [ value, setValue ] = useState('');
+  const [ progress, setProgress ] = useState([]);
+  const [ isWorkoutOpen, setWorkoutOpen ] = useState(false);
+  const [ isProgressOpen, setProgressOpen ] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -95,11 +109,59 @@ export default function Menu() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  /* Select Progress List */
+  const handleSelect = (e) => {
+    console.log(e.currentTarget.textContent)
+    setValue(e.currentTarget.textContent);
+    setWorkout('');
+    setProgressOpen(false);
+  }
 
+  /* Handle Workout Routine */
+  const handleClick = (e) => {
+    setWorkout(e.currentTarget.textContent);
+    // setValue('');
+    // setWorkoutOpen(false);
+  }
+
+  // const openWorkout = () => {
+  //   setWorkoutOpen(!isWorkoutOpen);
+  //   setProgressOpen(false);
+  // };
+
+  // const openProgress = () => {
+  //   setProgressOpen(!isProgressOpen);
+  //   setWorkoutOpen(false);
+  // };
+
+  /* Menu Icons */
   const renderIcon = (icon) => {
     if (icon === 'Home') return <HomeIcon/>;
     if (icon === 'Shoulders' || icon === 'Planks') return <FitnessCenterIcon/>;
     if (icon === 'Progress') return <PhotoLibraryIcon/>;
+  }
+  /* Render View */
+
+  const renderView = () => {
+    if (workouts === "Shoulders") {
+      return <Shoulders />
+    } else if (workouts === "Planks") {
+      return <Planks />
+    // } else if (workouts === "Sleeping") {
+    //   return <Sleeping />
+    // } else if (value === "Shoulder Press") {
+    //   return <ShouldersProgress progress={progress}/>
+    // } else if (value === "Planks") {
+    //   return <PlanksProgress progress={progress}/>
+    } else if (workouts === "Progress") {
+      return <ProgressForm handleForm={addToProgressList}/>
+    } else {
+      return (
+        <div>
+          <Greeting />
+        </div>
+      )
+    }
   }
   return (
     <div className={classes.root}>
@@ -148,7 +210,7 @@ export default function Menu() {
         <Divider />
         <List>
           {['Home', 'Shoulders', 'Planks', 'Progress'].map((text) => (
-            <ListItem button key={text}>
+            <ListItem onClick={handleClick} button key={text}>
               <ListItemIcon>{renderIcon(text)}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
@@ -158,13 +220,10 @@ export default function Menu() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography paragraph>
-          Welcome to Form Check!
-        </Typography>
-        <Typography paragraph>
-          Form Check is a great way to count your reps and executing them to perfection, while avoiding injuries.
-        </Typography>
+        {renderView()}
       </main>
     </div>
   );
 }
+
+export default Menu;

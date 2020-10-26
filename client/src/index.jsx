@@ -154,12 +154,7 @@ import Menu from './Menu.jsx'
 //   const [ progress, setProgress ] = useState([]);
 //   const [ isWorkoutOpen, setWorkoutOpen ] = useState(false);
 //   const [ isProgressOpen, setProgressOpen ] = useState(false);
-//   const [ isMenuOpen, setMenuOpen ] = useState(false);
-//   const node = useRef();
-//   const menuId = "main-menu";
 
-//   /* Handle Menu Burger */
-//   useOnClickMenu(node, () => setMenuOpen(false));
 
 //   /* Select Progress List */
 //   const handleSelect = (e) => {
