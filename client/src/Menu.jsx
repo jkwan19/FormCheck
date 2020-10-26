@@ -109,16 +109,16 @@ function Menu() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  /* Select Progress List */
-  const handleSelect = (e) => {
-    console.log(e.currentTarget.textContent)
-    setValue(e.currentTarget.textContent);
-    setWorkout('');
-    setProgressOpen(false);
-  }
+  // /* Select Progress List */
+  // const handleSelect = (e) => {
+  //   setValue(e.currentTarget.textContent);
+  //   setWorkout('');
+  //   setProgressOpen(false);
+  // }
 
   /* Handle Workout Routine */
   const handleClick = (e) => {
+    console.log(e.currentTarget.textContent)
     setWorkout(e.currentTarget.textContent);
     // setValue('');
     // setWorkoutOpen(false);
@@ -133,6 +133,23 @@ function Menu() {
   //   setProgressOpen(!isProgressOpen);
   //   setWorkoutOpen(false);
   // };
+
+
+  /* Get list of progress */
+  const getProgressList = () => {
+    axios.get('/progress')
+      .then(res => {
+        setProgress([res.data]);
+      })
+      .catch(err => console.log('err', err));
+  }
+
+  /* Add to progress tracker */
+  const addToProgressList = (data) => {
+    axios.post('/progress', data)
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err))
+  }
 
   /* Menu Icons */
   const renderIcon = (icon) => {

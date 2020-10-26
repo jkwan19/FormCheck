@@ -3,20 +3,29 @@ import styled from 'styled-components';
 import YouTube from 'react-youtube';
 import CheckForm from './Shoulders/CheckForm.jsx';
 
-const Wrapper = styled("div")``;
-const Header = styled("h2")`
-  font: 1.1 em;
+const Wrapper = styled("div")`
   text-align: center;
 `;
+const Header = styled("h2")`
+  font: 1.1 em;
+`;
 const Button = styled("div")`
-  text-align: center;
-  width: auto;
+  height:20px;
+  position:relative;
+  margin: -20px -50px;
+  width:100px;
+  top:50%;
+  left:50%;
   &:hover {
     color: white;
     background-color: grey;
     cursor: pointer;
   }
 `;
+
+const ButtonText = styled("button")`
+  text-align: center;
+`
 
 const VideoContainer = styled("div")`
   text-align: center;
@@ -54,7 +63,11 @@ function Shoulders (props) {
           <VideoContainer>
             <YouTube videoId="B-aVuyhvLHU" opts={opts} onReady={onReady}/>
           </VideoContainer>
-          <Button onClick={handleClick} > Check My Form </Button>
+          <Button onClick={handleClick} >
+            <ButtonText>
+              Check My Form
+            </ButtonText>
+          </Button>
         </Wrapper>
       )
     }
