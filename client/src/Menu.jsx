@@ -1,12 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Greeting from './components/Greeting.jsx';
-import Shoulders from './components/Workout/Shoulders.jsx';
-import Planks from './components/Workout/Planks.jsx';
-import Sleeping from './components/Workout/Sleeping.jsx';
-import ShouldersProgress from './components/Progress/Shoulders.jsx';
-import PlanksProgress from './components/Progress/Planks.jsx';
-import ProgressForm from './components/Form/ProgressForm.jsx';
 import styled, { createGlobalStyle } from 'styled-components';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -27,6 +20,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
+import ProgressForm from './components/Form/ProgressForm.jsx';
+import PlanksProgress from './components/Progress/Planks.jsx';
+import ShouldersProgress from './components/Progress/Shoulders.jsx';
+import Sleeping from './components/Workout/Sleeping.jsx';
+import Planks from './components/Workout/Planks.jsx';
+import Shoulders from './components/Workout/Shoulders.jsx';
+import Greeting from './components/Greeting.jsx';
 
 const drawerWidth = 240;
 
@@ -84,6 +84,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
     padding: theme.spacing(0, 1),
   },
+
   toolbar: theme.mixins.toolbar,
 
   content: {
@@ -96,11 +97,11 @@ function Menu() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [ workouts, setWorkout ] = useState('');
-  const [ value, setValue ] = useState('');
-  const [ progress, setProgress ] = useState([]);
-  const [ isWorkoutOpen, setWorkoutOpen ] = useState(false);
-  const [ isProgressOpen, setProgressOpen ] = useState(false);
+  const [workouts, setWorkout] = useState('');
+  // const [value, setValue] = useState('');
+  // const [progress, setProgress] = useState([]);
+  // const [isWorkoutOpen, setWorkoutOpen] = useState(false);
+  // const [isProgressOpen, setProgressOpen] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -118,11 +119,11 @@ function Menu() {
 
   /* Handle Workout Routine */
   const handleClick = (e) => {
-    console.log(e.currentTarget.textContent)
+    console.log(e.currentTarget.textContent);
     setWorkout(e.currentTarget.textContent);
     // setValue('');
     // setWorkoutOpen(false);
-  }
+  };
 
   // const openWorkout = () => {
   //   setWorkoutOpen(!isWorkoutOpen);
@@ -134,52 +135,50 @@ function Menu() {
   //   setWorkoutOpen(false);
   // };
 
-
   /* Get list of progress */
-  const getProgressList = () => {
-    axios.get('/progress')
-      .then(res => {
-        setProgress([res.data]);
-      })
-      .catch(err => console.log('err', err));
-  }
+  // const getProgressList = () => {
+  //   axios.get('/progress')
+  //     .then((res) => {
+  //       setProgress([res.data]);
+  //     })
+  //     .catch((err) => console.log('err', err));
+  // };
 
   /* Add to progress tracker */
   const addToProgressList = (data) => {
     axios.post('/progress', data)
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err))
-  }
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+  };
 
   /* Menu Icons */
   const renderIcon = (icon) => {
-    if (icon === 'Home') return <HomeIcon/>;
-    if (icon === 'Shoulders' || icon === 'Planks') return <FitnessCenterIcon/>;
-    if (icon === 'Progress') return <PhotoLibraryIcon/>;
-  }
+    if (icon === 'Home') return <HomeIcon />;
+    if (icon === 'Shoulders' || icon === 'Planks') return <FitnessCenterIcon />;
+    if (icon === 'Progress') return <PhotoLibraryIcon />;
+  };
   /* Render View */
 
   const renderView = () => {
-    if (workouts === "Shoulders") {
-      return <Shoulders />
-    } else if (workouts === "Planks") {
-      return <Planks />
+    if (workouts === 'Shoulders') {
+      return <Shoulders />;
+    } if (workouts === 'Planks') {
+      return <Planks />;
     // } else if (workouts === "Sleeping") {
     //   return <Sleeping />
     // } else if (value === "Shoulder Press") {
     //   return <ShouldersProgress progress={progress}/>
     // } else if (value === "Planks") {
     //   return <PlanksProgress progress={progress}/>
-    } else if (workouts === "Progress") {
-      return <ProgressForm handleForm={addToProgressList}/>
-    } else {
-      return (
-        <div>
-          <Greeting />
-        </div>
-      )
+    } if (workouts === 'Progress') {
+      return <ProgressForm handleForm={addToProgressList} />;
     }
-  }
+    return (
+      <div>
+        <Greeting />
+      </div>
+    );
+  };
   return (
     <div className={classes.root}>
       <CssBaseline />
