@@ -5,10 +5,11 @@ import CheckForm from './Planks/CheckForm.jsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
-const Wrapper = styled("div")``;
+const Wrapper = styled("div")`
+  text-align: center;
+`;
 const Header = styled("h2")`
   font: 1.1 em;
-  text-align: center;
 `;
 
 const VideoContainer = styled("div")`
