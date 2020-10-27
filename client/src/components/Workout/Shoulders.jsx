@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import YouTube from 'react-youtube';
 import CheckForm from './Shoulders/CheckForm.jsx';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+
 
 const Wrapper = styled("div")`
   text-align: center;
@@ -9,23 +12,6 @@ const Wrapper = styled("div")`
 const Header = styled("h2")`
   font: 1.1 em;
 `;
-const Button = styled("div")`
-  height:20px;
-  position:relative;
-  margin: -20px -50px;
-  width:100px;
-  top:50%;
-  left:50%;
-  &:hover {
-    color: white;
-    background-color: grey;
-    cursor: pointer;
-  }
-`;
-
-const ButtonText = styled("button")`
-  text-align: center;
-`
 
 const VideoContainer = styled("div")`
   text-align: center;
@@ -63,10 +49,8 @@ function Shoulders (props) {
           <VideoContainer>
             <YouTube videoId="B-aVuyhvLHU" opts={opts} onReady={onReady}/>
           </VideoContainer>
-          <Button onClick={handleClick} >
-            <ButtonText>
-              Check My Form
-            </ButtonText>
+          <Button onClick={handleClick} variant="contained" color="primary">
+            Check My Form
           </Button>
         </Wrapper>
       )

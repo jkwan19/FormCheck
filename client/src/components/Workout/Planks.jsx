@@ -2,21 +2,15 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import YouTube from 'react-youtube';
 import CheckForm from './Planks/CheckForm.jsx';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 const Wrapper = styled("div")``;
 const Header = styled("h2")`
   font: 1.1 em;
   text-align: center;
 `;
-const Button = styled("div")`
-  text-align: center;
-  width: auto;
-  &:hover {
-    color: white;
-    background-color: grey;
-    cursor: pointer;
-  }
-`;
+
 const VideoContainer = styled("div")`
   text-align: center;
   margin: auto;
@@ -51,7 +45,9 @@ function Planks (props) {
           <VideoContainer>
             <YouTube videoId="pSHjTRCQxIw" opts={opts} onReady={onReady}/>
           </VideoContainer>
-          <Button onClick={handleClick} > Check My Form </Button>
+          <Button onClick={handleClick} variant="contained" color="primary">
+            Check My Form
+          </Button>
         </Wrapper>
       )
     }
