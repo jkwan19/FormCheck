@@ -98,8 +98,8 @@ function Menu() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [workouts, setWorkout] = useState('');
+  const [progress, setProgress] = useState([]);
   // const [value, setValue] = useState('');
-  // const [progress, setProgress] = useState([]);
   // const [isWorkoutOpen, setWorkoutOpen] = useState(false);
   // const [isProgressOpen, setProgressOpen] = useState(false);
 
@@ -136,13 +136,18 @@ function Menu() {
   // };
 
   /* Get list of progress */
-  // const getProgressList = () => {
-  //   axios.get('/progress')
-  //     .then((res) => {
-  //       setProgress([res.data]);
-  //     })
-  //     .catch((err) => console.log('err', err));
-  // };
+  const getProgressList = () => {
+    axios.get('/progress')
+      .then((res) => {
+        setProgress([...res.data]);
+      })
+      .catch((err) => console.log('err', err));
+  };
+
+  useEffect (()=> {
+    getProgressList();
+  })
+
 
   /* Add to progress tracker */
   const addToProgressList = (data) => {
@@ -151,34 +156,31 @@ function Menu() {
       .catch((err) => console.log(err));
   };
 
+
   /* Menu Icons */
   const renderIcon = (icon) => {
     if (icon === 'Home') return <HomeIcon />;
     if (icon === 'Shoulders' || icon === 'Planks') return <FitnessCenterIcon />;
     if (icon === 'Progress') return <PhotoLibraryIcon />;
   };
-  /* Render View */
 
+  /* Render View */
   const renderView = () => {
     if (workouts === 'Shoulders') {
       return <Shoulders />;
     } if (workouts === 'Planks') {
       return <Planks />;
-    // } else if (workouts === "Sleeping") {
-    //   return <Sleeping />
-    // } else if (value === "Shoulder Press") {
-    //   return <ShouldersProgress progress={progress}/>
-    // } else if (value === "Planks") {
-    //   return <PlanksProgress progress={progress}/>
     } if (workouts === 'Progress') {
       return <ProgressForm handleForm={addToProgressList} />;
     }
     return (
       <div>
         <Greeting />
+        <ShouldersProgress progress={progress}/>
       </div>
     );
   };
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -237,6 +239,7 @@ function Menu() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         {renderView()}
+
       </main>
     </div>
   );
