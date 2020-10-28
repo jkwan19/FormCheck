@@ -42,6 +42,7 @@ function UploadButtons(props) {
       </label>
       <input accept="image/*" className={classes.input} id="icon-button-file" type="file" />
       <Button
+        type="submit"
         onClick={props.upload}
         variant="contained"
         color="primary"

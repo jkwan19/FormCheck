@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 import ShouldersProgressItem from './ShouldersItem.jsx'
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
@@ -52,31 +53,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-/**
- * The example data is structured as follows:
- *
- * import image from 'path/to/image.jpg';
- * [etc...]
- *
- * const tileData = [
- *   {
- *     img: image,
- *     title: 'Image',
- *     author: 'author',
- *     featured: true,
- *   },
- *   {
- *     [etc...]
- *   },
- * ];
- */
-
-// const tileData = {
-//     img: image,
-//     title: 'Image',
-//     author: 'author',
-//     featured: true,
-// };
+const toDate = (date) => {
+  return moment(date).calendar();
+}
 
 function Shoulders(props) {
   const classes = useStyles();
@@ -84,15 +63,16 @@ function Shoulders(props) {
   return (
     <div className={classes.root}>
       <GridList cellHeight={200} spacing={1} className={classes.gridList}>
-        {progressList.map((tile) => (
-          <GridListTile key={tile.img} cols={tile.featured ? 2 : 1} rows={tile.featured ? 2 : 1}>
+        {progressList.map((tile, index) => (
+          <GridListTile key={`${tile.imageUrl}${index}`} cols={index === 0 ? 2 : 1} rows={index === 0 ? 2 : 1}>
             <img src={tile.imageUrl} alt={tile.workout} />
             <GridListTileBar
               title={tile.workout}
+              subtitle={toDate(tile.createdAt)}
               titlePosition="top"
               actionIcon={
                 <IconButton aria-label={`star ${tile.workout}`} className={classes.icon}>
-                  <StarBorderIcon />
+                  {/* <StarBorderIcon /> */}
                 </IconButton>
               }
               actionPosition="left"

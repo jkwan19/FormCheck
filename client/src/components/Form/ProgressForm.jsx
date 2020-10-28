@@ -46,14 +46,13 @@ function ProgressForm(props) {
   };
 
   const uploadHandler = (e) => {
-    e.preventDefault();
-    // let formData = {
-    //   workout: title,
-    //   imageUrl: imageUrl
-    // }
-    // props.handleForm(formData);
-    // setTitle('Shoulders');
-    // setImageUrl('');
+    let formData = {
+      workout: title,
+      imageUrl: imageUrl
+    }
+    props.handleForm(formData);
+    setTitle('Shoulders');
+    setImageUrl('');
   };
 
   return (
@@ -68,7 +67,7 @@ function ProgressForm(props) {
         Image:
         {' '}
         <Input type="text" onChange={imageHandler} placeholder="Link..." />
-        <UploadButtons upload={uploadHandler} />
+        <UploadButtons upload={uploadHandler}/>
       </Form>
     </Wrapper>
   );

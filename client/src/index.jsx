@@ -1,14 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
-// import axios from 'axios';
-// import Workouts from './components/Workouts.jsx';
-// import Shoulders from './components/Workout/Shoulders.jsx';
-// import Planks from './components/Workout/Planks.jsx';
-// import Sleeping from './components/Workout/Sleeping.jsx';
-// import ShouldersProgress from './components/Progress/Shoulders.jsx';
-// import PlanksProgress from './components/Progress/Planks.jsx';
-// import ProgressForm from './components/Form/ProgressForm.jsx';
-// import styled, { createGlobalStyle } from 'styled-components';
 import Menu from './Menu.jsx'
 
 // const GlobalStyle = createGlobalStyle`

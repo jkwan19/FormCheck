@@ -119,7 +119,6 @@ function Menu() {
 
   /* Handle Workout Routine */
   const handleClick = (e) => {
-    console.log(e.currentTarget.textContent);
     setWorkout(e.currentTarget.textContent);
     // setValue('');
     // setWorkoutOpen(false);
@@ -139,7 +138,7 @@ function Menu() {
   const getProgressList = () => {
     axios.get('/progress')
       .then((res) => {
-        setProgress([...res.data]);
+        setProgress([...res.data.reverse()]);
       })
       .catch((err) => console.log('err', err));
   };
@@ -239,7 +238,6 @@ function Menu() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         {renderView()}
-
       </main>
     </div>
   );
