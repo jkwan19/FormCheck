@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import firebase from "firebase/app";
+import "firebase/auth";
 
 function Copyright() {
   return (
@@ -46,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SignIn() {
+function SignIn(props) {
   const classes = useStyles();
 
   return (
@@ -92,6 +94,8 @@ function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onSubmit={props.login}
+            onClick={props.login}
           >
             Sign In
           </Button>

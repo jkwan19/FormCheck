@@ -30,6 +30,7 @@ import Planks from '../Workout/Planks.jsx';
 import Shoulders from '../Workout/Shoulders.jsx';
 import Greeting from './Greeting.jsx';
 import SignIn from './SignIn.jsx';
+import DropdownMenu from './DropdownMenu.jsx'
 // import Dashboard from './Dashboard.jsx';
 
 const drawerWidth = 240;
@@ -100,10 +101,11 @@ const useStyles = makeStyles((theme) => ({
 function Menu() {
   const classes = useStyles();
   const theme = useTheme();
-  const [login, setLogin] = useState(false);
+  const [isLoggedIn, setLogin] = useState(true);
   const [open, setOpen] = useState(false);
   const [workouts, setWorkout] = useState('');
   const [progress, setProgress] = useState([]);
+  const [dropdown, setDropdown] = useState('');
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -115,12 +117,20 @@ function Menu() {
 
   /* Login Page */
   const handleLogin = (e) => {
+    e.preventDefault();
+    console.log('logging in')
     setLogin(true);
   }
 
   /* Handle Workout Routine */
   const handleClick = (e) => {
     setWorkout(e.currentTarget.textContent);
+  };
+
+  /* Handle Dropdown Filter */
+  const handleDropdown = (e) => {
+    setDropdown(e.target.value);
+    console.log(e.target.value, 'selecting')
   };
 
   /* Get list of progress */
@@ -211,7 +221,7 @@ function Menu() {
     } else {
       return (
         <div>
-          <SignIn />
+          <SignIn login={handleLogin}/>
         </div>
       )
     }
@@ -232,82 +242,86 @@ function Menu() {
     } if (workouts === 'Planks') {
       return <Planks />;
     } if (workouts === 'Progress') {
-      return <ProgressForm handleForm={addToProgressList} />;
+      return <ProgressForm
+        handleForm={addToProgressList}
+        selections={dropdown}
+        />;
     }
     return (
       <div>
         <Greeting />
         <Images progress={progress}/>
+        <DropdownMenu handleDropdown={handleDropdown}/>
       </div>
     );
   };
 
-  return (
-    <div>
-      {renderPage()};
-    </div>
-  )
   // return (
-  //   <div className={classes.root}>
-  //     <CssBaseline />
-  //     <AppBar
-  //       position="fixed"
-  //       className={clsx(classes.appBar, {
-  //         [classes.appBarShift]: open,
-  //       })}
-  //     >
-  //       <Toolbar>
-  //         <IconButton
-  //           color="inherit"
-  //           aria-label="open drawer"
-  //           onClick={handleDrawerOpen}
-  //           edge="start"
-  //           className={clsx(classes.menuButton, {
-  //             [classes.hide]: open,
-  //           })}
-  //         >
-  //           <MenuIcon />
-  //         </IconButton>
-  //         <Typography variant="h6" noWrap>
-  //           FormCheck
-  //         </Typography>
-  //       </Toolbar>
-  //     </AppBar>
-  //     <Drawer
-  //       variant="permanent"
-  //       className={clsx(classes.drawer, {
-  //         [classes.drawerOpen]: open,
-  //         [classes.drawerClose]: !open,
-  //       })}
-  //       classes={{
-  //         paper: clsx({
-  //           [classes.drawerOpen]: open,
-  //           [classes.drawerClose]: !open,
-  //         }),
-  //       }}
-  //     >
-  //       <div className={classes.toolbar}>
-  //         <IconButton onClick={handleDrawerClose}>
-  //           {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-  //         </IconButton>
-  //       </div>
-  //       <Divider />
-  //       <List>
-  //         {['Home', 'Shoulders', 'Planks', 'Progress'].map((text) => (
-  //           <ListItem onClick={handleClick} button key={text}>
-  //             <ListItemIcon>{renderIcon(text)}</ListItemIcon>
-  //             <ListItemText primary={text} />
-  //           </ListItem>
-  //         ))}
-  //       </List>
-  //       <Divider />
-  //     </Drawer>
-  //     <main className={classes.content}>
-  //       <div className={classes.toolbar} />
-  //       {renderView()}
-  //     </main>
+  //   <div>
+  //     {renderPage()};
   //   </div>
-  // );
+  // )
+  return (
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, {
+              [classes.hide]: open,
+            })}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap>
+            FormCheck
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        variant="permanent"
+        className={clsx(classes.drawer, {
+          [classes.drawerOpen]: open,
+          [classes.drawerClose]: !open,
+        })}
+        classes={{
+          paper: clsx({
+            [classes.drawerOpen]: open,
+            [classes.drawerClose]: !open,
+          }),
+        }}
+      >
+        <div className={classes.toolbar}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          {['Home', 'Shoulders', 'Planks', 'Progress'].map((text) => (
+            <ListItem onClick={handleClick} button key={text}>
+              <ListItemIcon>{renderIcon(text)}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+      </Drawer>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        {renderView()}
+      </main>
+    </div>
+  );
 }
 
 export default Menu;

@@ -4,7 +4,30 @@
   <title>Form Check</title>
 </head>
 <body>
-<div id="app"></div>
-<script type="text/javascript" src="bundle.js"></script>
+  <div id="app"></div>
+  <script type="text/javascript" src="bundle.js"></script>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="/__/firebase/8.0.0/firebase-auth.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyBqMLhMstEAPHhh9nYAtebNkcwSdiGrvIE",
+      authDomain: "formcheck-16d09.firebaseapp.com",
+      databaseURL: "https://formcheck-16d09.firebaseio.com",
+      projectId: "formcheck-16d09",
+      storageBucket: "formcheck-16d09.appspot.com",
+      messagingSenderId: "963693033147",
+      appId: "1:963693033147:web:4c7dfcd8d00a02283a9b9e",
+      measurementId: "G-N9NNN50WCQ"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
 </body>
 </html>
