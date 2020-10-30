@@ -1,8 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
@@ -16,23 +15,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const workouts = [
-  'Shoulders',
-  'Planks',
-  'Pending'
-]
 function DropdownMenu(props) {
   const classes = useStyles();
+  const [dropdown, setDropdown] = useState({
+    workout: ''
+  });
+
+   /* Handle Dropdown Filter */
+   const workouts = [
+    'Shoulders',
+    'Planks',
+    'Pending'
+    ];
+
+  const handleDropdown = (e) => {
+    setDropdown({
+      workout: e.target.value
+    })
+    props.filter(dropdown.workout);
+  };
 
   return (
     <div>
       <FormControl className={classes.formControl}>
-        <InputLabel id="">Workout</InputLabel>
+        <InputLabel id="workout-selection">Workout</InputLabel>
         <Select
           labelId="workout-label"
           id="workout-select"
-          value={props.selections}
-          onChange={props.handleDropdown}
+          value={dropdown.workout}
+          onChange={handleDropdown}
         >
         {workouts.map((workout) => (
           <MenuItem key={workout} value={workout}>

@@ -31,8 +31,8 @@ import Shoulders from '../Workout/Shoulders.jsx';
 import Greeting from './Greeting.jsx';
 import SignIn from './SignIn.jsx';
 import DropdownMenu from './DropdownMenu.jsx'
-// import Dashboard from './Dashboard.jsx';
 
+/* Styling */
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -98,6 +98,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/* App */
 function Menu() {
   const classes = useStyles();
   const theme = useTheme();
@@ -105,8 +106,8 @@ function Menu() {
   const [open, setOpen] = useState(false);
   const [workouts, setWorkout] = useState('');
   const [progress, setProgress] = useState([]);
-  const [dropdown, setDropdown] = useState('');
 
+  /* Menu Hamburger */
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -128,10 +129,12 @@ function Menu() {
   };
 
   /* Handle Dropdown Filter */
-  const handleDropdown = (e) => {
-    setDropdown(e.target.value);
-    console.log(e.target.value, 'selecting')
-  };
+  const handleFilter = (view) => {
+    let filtered = progress.filter(data =>
+      data.workout === view
+    );
+    setProgress(filtered);
+  }
 
   /* Get list of progress */
   const getProgressList = () => {
@@ -251,7 +254,7 @@ function Menu() {
       <div>
         <Greeting />
         <Images progress={progress}/>
-        <DropdownMenu handleDropdown={handleDropdown}/>
+        <DropdownMenu filter={handleFilter}/>
       </div>
     );
   };

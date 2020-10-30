@@ -7,26 +7,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
-// import tileData from './tileData';
 
-// const Wrapper = styled('div') ``;
-// const List = styled("ul") `
-//   text-align: center;
-// `;
-// function Shoulders (props) {
-//   let progressList = props.progress;
-//   return(
-//     <Wrapper>
-//       <List>
-//         {
-//           progressList.map(progress =>
-//             <ShouldersProgressItem item={progress} />
-//             )
-//           }
-//       </List>
-//     </Wrapper>
-//   )
-// }
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
