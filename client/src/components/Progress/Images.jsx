@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     justifyContent: 'space-around',
     overflow: 'hidden',
-    float: 'left',
+    float: 'center',
     backgroundColor: theme.palette.background.paper,
   },
   gridList: {
@@ -40,6 +40,7 @@ const toDate = (date) => {
 function Images(props) {
   const classes = useStyles();
   const progressList = props.progress;
+
   return (
     <div className={classes.root}>
       <GridList cellHeight={200} spacing={1} className={classes.gridList}>

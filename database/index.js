@@ -1,6 +1,6 @@
 const moment = require('moment');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/progress', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost/progress', {useNewUrlParser: true, useUnifiedTopology: true });
 
 var db = mongoose.connection;
 
@@ -12,9 +12,17 @@ db.once('open', function() {
   console.log('mongoose connected successfully');
 });
 
+// var progressSchema = new mongoose.Schema({
+//   workout: {type: String, required: true},
+//   imageUrl: {type: String, required: true}
+//   },
+//   {
+//     timestamps: true
+//   }
+// );
 var progressSchema = new mongoose.Schema({
   workout: {type: String, required: true},
-  imageUrl: {type: String, required: true}
+  imageUrl: {data: Buffer, contentType: String}
   },
   {
     timestamps: true

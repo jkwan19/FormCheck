@@ -33,7 +33,6 @@ const Dropdown = styled('select')`
 `;
 
 function ProgressForm(props) {
-  // const [selectedFile, setSelectedFile] = useState(null);
   const [title, setTitle] = useState('Shoulders');
   const [imageUrl, setImageUrl] = useState('');
 
@@ -42,10 +41,13 @@ function ProgressForm(props) {
   };
 
   const imageHandler = (e) => {
-    setImageUrl(e.target.value);
+    console.log(e.target.files, 'test file upload')
+    setImageUrl(e.target.files[0]);
+    console.log(imageUrl, 'image')
   };
 
   const uploadHandler = (e) => {
+    e.preventDefault();
     let formData = {
       workout: title,
       imageUrl: imageUrl
@@ -58,16 +60,14 @@ function ProgressForm(props) {
   return (
     <Wrapper>
       <GlobalStyles />
-      <Form>
+      <Form method="post" enctype="multipart/form-data" action="/upload">
         Workout:
         <Dropdown onChange={titleHandler}>
           <Options value="Shoulders">Shoulders</Options>
           <Options value="Planks">Planks</Options>
         </Dropdown>
-        Image:
-        {' '}
-        <Input type="text" onChange={imageHandler} placeholder="Link..." />
-        <UploadButtons upload={uploadHandler}/>
+        Upload Image
+        <UploadButtons upload={uploadHandler} uploadImage={imageHandler} image={imageUrl}/>
       </Form>
     </Wrapper>
   );

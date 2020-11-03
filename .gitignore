@@ -2,3 +2,4 @@ node_modules
 database-postgresql
 yarn.lock
 schema.sql
+.env

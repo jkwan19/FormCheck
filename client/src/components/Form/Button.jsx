@@ -27,19 +27,23 @@ function UploadButtons(props) {
         id="contained-button-file"
         multiple
         type="file"
+        accept="image/png, image/jpeg"
+        onChange={props.uploadImage}
       />
-      <label htmlFor="contained-button-file">
-        <Button
-        variant="contained"
-        color="default"
-        component="span"
-        className={classes.button}
-        startIcon={<CloudUploadIcon />}
-      >
-        Upload
-      </Button>
-      </label>
-      <input accept="image/*" className={classes.input} id="icon-button-file" type="file" />
+      <div>
+        <label htmlFor="contained-button-file">
+          <Button
+          variant="contained"
+          color="default"
+          component="span"
+          className={classes.button}
+          startIcon={<CloudUploadIcon />}
+        >
+          Upload
+          </Button>
+        </label>
+        {props.image ? props.image.name : ''}
+      </div>
       <Button
         type="submit"
         onClick={props.upload}
