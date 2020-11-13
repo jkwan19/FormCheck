@@ -33,41 +33,42 @@ const Dropdown = styled('select')`
 `;
 
 function ProgressForm(props) {
-  const [title, setTitle] = useState('Shoulders');
-  const [imageUrl, setImageUrl] = useState('');
+  const [workout, setWorkout] = useState('Shoulders');
+  const [image, setImage] = useState('')
 
-  const titleHandler = (e) => {
-    setTitle(e.target.value);
+  const workoutHandler = (e) => {
+    setWorkout(e.target.value);
   };
 
   const imageHandler = (e) => {
-    console.log(e.target.files, 'test file upload')
-    setImageUrl(e.target.files[0]);
-    console.log(imageUrl, 'image')
+    setImage(e.target.files[0]);
   };
 
   const uploadHandler = (e) => {
     e.preventDefault();
-    let formData = {
-      workout: title,
-      imageUrl: imageUrl
+    const formData = new FormData();
+    formData.append('image', image);
+    let data = {
+      workout,
+      image: formData
     }
-    props.handleForm(formData);
-    setTitle('Shoulders');
-    setImageUrl('');
+    console.log(workout, image, 'appending')
+    props.handleForm(data);
+    setWorkout('Shoulders');
+    setImage('');
   };
 
   return (
     <Wrapper>
       <GlobalStyles />
-      <Form method="post" enctype="multipart/form-data" action="/upload">
+      <Form method="post" enctype="application/x-www-form-urlencoded" action="./public/uploads">
         Workout:
-        <Dropdown onChange={titleHandler}>
+        <Dropdown onChange={workoutHandler}>
           <Options value="Shoulders">Shoulders</Options>
           <Options value="Planks">Planks</Options>
         </Dropdown>
         Upload Image
-        <UploadButtons upload={uploadHandler} uploadImage={imageHandler} image={imageUrl}/>
+        <UploadButtons upload={uploadHandler} uploadImage={imageHandler} image={image}/>
       </Form>
     </Wrapper>
   );

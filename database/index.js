@@ -12,17 +12,9 @@ db.once('open', function() {
   console.log('mongoose connected successfully');
 });
 
-// var progressSchema = new mongoose.Schema({
-//   workout: {type: String, required: true},
-//   imageUrl: {type: String, required: true}
-//   },
-//   {
-//     timestamps: true
-//   }
-// );
 var progressSchema = new mongoose.Schema({
   workout: {type: String, required: true},
-  imageUrl: {data: Buffer, contentType: String}
+  image: {type: String, required: false}
   },
   {
     timestamps: true

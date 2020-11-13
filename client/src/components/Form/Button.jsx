@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import SaveIcon from '@material-ui/icons/Save';
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
@@ -27,6 +26,7 @@ function UploadButtons(props) {
         id="contained-button-file"
         multiple
         type="file"
+        name="image"
         accept="image/png, image/jpeg"
         onChange={props.uploadImage}
       />

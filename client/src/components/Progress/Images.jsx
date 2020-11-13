@@ -8,6 +8,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -40,13 +41,13 @@ const toDate = (date) => {
 function Images(props) {
   const classes = useStyles();
   const progressList = props.progress;
-
+  console.log(progressList, 'list')
   return (
     <div className={classes.root}>
       <GridList cellHeight={200} spacing={1} className={classes.gridList}>
         {progressList.map((tile, index) => (
-          <GridListTile key={`${tile.imageUrl}${index}`} cols={index === 0 ? 2 : 1} rows={index === 0 ? 2 : 1}>
-            <img src={tile.imageUrl} alt={tile.workout} />
+          <GridListTile key={`${tile.image}${index}`} cols={index === 0 ? 2 : 1} rows={index === 0 ? 2 : 1}>
+            <img src={tile.image.name} alt={tile.workout} />
             <GridListTileBar
               title={tile.workout}
               subtitle={toDate(tile.createdAt)}

@@ -1,28 +1,39 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const Progress = require('../database/index.js');
-const upload = require('./ImageUploader.js')
-const singleUpload = upload.single("image");
 const app = express();
-const cors = require("cors");
+const cors = require('cors');
 
 const fs = require('fs');
 const path = require('path');
+const multer = require("multer");
+const router = express.Router();
+const destination = '/public/uploads';
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, `.${destination}`);
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  }
+});
+const upload = multer({storage});
 
 app.use(cors());
+// app.use(upload.single('image'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-app.set("view engine", "ejs");
-
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/../client/dist'));
+
 
 app.get('/progress', function (req, res) {
   const selectAll = (callback) => {
     Progress.find({}, function(err, data) {
       if(err) {
-        res.sendStatus(500);
+        return res.sendStatus(500);
       } else {
-        res.json(data);
+        return res.json(data);
       }
     })
   };
@@ -35,59 +46,20 @@ app.get('/progress', function (req, res) {
   });
 });
 
-// app.post('/progress', function (req, res) {
-//   let progress = new Progress(req.body);
-//   const create = ((callback) => {
-//     progress.save((err, data) => {
-//       if (err) {
-//         console.log('error posting:', err);
-//       } else {
-//         res.send(data)
-//       }
-//     })
-//   })
-//   create((err, data) => {
-//     if (err) {
-//       res.sendStatus(500)
-//     } else {
-//       console.log('posted')
-//     }
-//   })
-// })
 
-app.post('/progress', function (req, res) {
-  singleUpload(req, res, function (err) {
-    if (err) {
-      return res.json({
-        success: false,
-        errors: {
-          title: "Image Upload Error",
-          detail: err.message,
-          error: err,
-        },
-      });
-    }
-  });
-  let progress = new Progress(req.body);
-  const create = ((callback) => {
-    progress.save((err, data) => {
-      if (err) {
-        console.log('error posting:', err);
-      } else {
-        res.send(data)
-      }
-    })
-  })
-  create((err, data) => {
-    if (err) {
-      res.sendStatus(500)
-    } else {
-      console.log('posted')
-    }
-  });
+app.post('/upload-progress', upload.single('image'), function (req, res) {
+  console.log(req.file, req.body.workout, req.body.image)
+  if (!req.file && !req.body.image) return res.send('Please upload a file');
+  const image = req.file.path;
+  let progress = new Progress();
+  progress.workout = req.body.workout;
+  progress.image = image ? image : req.body.image.name;
+  progress.save()
+    .then((data) => res.status(200).json({ success: true, data: data }))
+    .catch((err) => res.status(400).json({ success: false, error: err }));
+
 });
 
-app.listen(3000 || process.env.PORT, function() {
+app.listen(3000, () => {
   console.log('listening on port 3000!');
 });
-

@@ -171,7 +171,13 @@ function App() {
 
   /* Add to progress tracker */
   const addToProgressList = (data) => {
-    axios.post('/progress', data)
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data application/json',
+        'Access-Control-Allow-Origin': '*',
+      }
+    }
+    axios.post('/upload-progress', data, config)
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err));
   };
