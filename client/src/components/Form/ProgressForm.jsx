@@ -52,7 +52,6 @@ function ProgressForm(props) {
       workout,
       image: formData
     }
-    console.log(workout, image, 'appending')
     props.handleForm(data);
     setWorkout('Shoulders');
     setImage('');

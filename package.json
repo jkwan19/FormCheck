@@ -41,6 +41,7 @@
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.0.8",
     "jest": "^26.6.3",
+    "jest-transform-stub": "^2.0.0",
     "svg-inline-loader": "^0.8.2",
     "webpack": "^2.2.1"
   },
@@ -49,6 +50,7 @@
     "@material-ui/icons": "^4.9.1",
     "@tensorflow-models/posenet": "^2.2.1",
     "@tensorflow/tfjs": "^2.0.1",
+    "@testing-library/react": "^11.1.2",
     "angular": "^1.6.3",
     "aws-sdk": "^2.784.0",
     "axios": "^0.19.2",
@@ -71,6 +73,7 @@
     "react-dom": "^16.8.3",
     "react-images-upload": "^1.2.8",
     "react-posenet": "^0.1.7",
+    "react-test-renderer": "^17.0.1",
     "react-video-recorder": "^3.17.1",
     "react-youtube": "^7.11.3",
     "styled-components": "^5.1.1"

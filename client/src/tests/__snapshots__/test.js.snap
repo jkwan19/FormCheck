@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App should render 1`] = `ShallowWrapper {}`;
+
+exports[`App should render App 1`] = `ShallowWrapper {}`;
+
+exports[`App should test Apps component with default state of empty array 1`] = `ShallowWrapper {}`;
+
+exports[`Form Button should render form Button component 1`] = `ShallowWrapper {}`;
+
+exports[`Greeting should render Greeting 1`] = `ShallowWrapper {}`;
+
+exports[`Greeting should render Greeting component 1`] = `ShallowWrapper {}`;
+
+exports[`Planks should render Planks component 1`] = `ShallowWrapper {}`;
+
+exports[`Progress Form should handle onSubmit handler 1`] = `ShallowWrapper {}`;
+
+exports[`Progress Form should render Progress Form component 1`] = `ShallowWrapper {}`;
+
+exports[`SearchBar should render SearchBar component 1`] = `ShallowWrapper {}`;
+
+exports[`Shoulders should render Shoulders component 1`] = `ShallowWrapper {}`;

@@ -34,37 +34,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const toDate = (date) => {
-  return moment(date).calendar();
-}
-
 function Images(props) {
   const classes = useStyles();
   const progressList = props.progress;
+  const toDate = (date) => {
+    return moment(date).calendar();
+  }
   console.log(progressList, 'list')
-  return (
-    <div className={classes.root}>
-      <GridList cellHeight={200} spacing={1} className={classes.gridList}>
-        {progressList.map((tile, index) => (
-          <GridListTile key={`${tile.image}${index}`} cols={index === 0 ? 2 : 1} rows={index === 0 ? 2 : 1}>
-            <img src={tile.image.name} alt={tile.workout} />
-            <GridListTileBar
-              title={tile.workout}
-              subtitle={toDate(tile.createdAt)}
-              titlePosition="top"
-              actionIcon={
-                <IconButton aria-label={`star ${tile.workout}`} className={classes.icon}>
-                  {/* <StarBorderIcon /> */}
-                </IconButton>
-              }
-              actionPosition="left"
-              className={classes.titleBar}
-            />
-          </GridListTile>
-        ))}
-      </GridList>
-    </div>
-  );
+  if (progressList) {
+    return (
+      <div className={classes.root}>
+        <GridList cellHeight={200} spacing={1} className={classes.gridList}>
+          {progressList.map((tile, index) => (
+            <GridListTile key={`${tile.image}${index}`} cols={index === 0 ? 2 : 1} rows={index === 0 ? 2 : 1}>
+              <img src={tile.image.name} alt={tile.workout} />
+              <GridListTileBar
+                title={tile.workout}
+                subtitle={toDate(tile.createdAt)}
+                titlePosition="top"
+                actionIcon={
+                  <IconButton aria-label={`star ${tile.workout}`} className={classes.icon}>
+                    {/* <StarBorderIcon /> */}
+                  </IconButton>
+                }
+                actionPosition="left"
+                className={classes.titleBar}
+              />
+            </GridListTile>
+          ))}
+        </GridList>
+      </div>
+    );
+  }
+  return <div>{'Loading.....'}</div>
 }
 
 export default Images;

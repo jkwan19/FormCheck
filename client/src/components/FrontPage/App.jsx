@@ -29,7 +29,7 @@ import Images from '../Progress/Images.jsx';
 import Planks from '../Workout/Planks.jsx';
 import Shoulders from '../Workout/Shoulders.jsx';
 import Greeting from './Greeting.jsx';
-import SignIn from './SignIn.jsx';
+// import SignIn from './SignIn.jsx';
 import SearchBar from './SearchBar.jsx'
 
 /* Styling */
@@ -277,8 +277,8 @@ function App() {
     return (
       <div>
         <Greeting />
-        <SearchBar handleFilter={handleFilter} search={search}/>
-        <Images progress={progress} />
+        <SearchBar id='filter' handleFilter={handleFilter} search={search}/>
+        <Images id='images' progress={progress} />
       </div>
     );
   };
