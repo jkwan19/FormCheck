@@ -3,3 +3,4 @@ database-postgresql
 yarn.lock
 schema.sql
 .env
+seed.js

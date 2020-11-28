@@ -36,12 +36,15 @@ function ProgressForm(props) {
   const [workout, setWorkout] = useState('Shoulders');
   const [image, setImage] = useState('')
 
+  const test = () => {
+    return true;
+  }
   const workoutHandler = (e) => {
     setWorkout(e.target.value);
   };
 
   const imageHandler = (e) => {
-    setImage(e.target.files[0]);
+    if (e.target.files) setImage(e.target.files[0]);
   };
 
   const uploadHandler = (e) => {
@@ -60,11 +63,11 @@ function ProgressForm(props) {
   return (
     <Wrapper>
       <GlobalStyles />
-      <Form method="post" enctype="application/x-www-form-urlencoded" action="./public/uploads">
+      <Form method="POST" enctype="multipart/form-data" action="/upload-progress">
         Workout:
-        <Dropdown onChange={workoutHandler}>
-          <Options value="Shoulders">Shoulders</Options>
-          <Options value="Planks">Planks</Options>
+        <Dropdown data-testid='dropdown' onChange={workoutHandler}>
+          <Options id='Shoulders' value="Shoulders">Shoulders</Options>
+          <Options id='Planks' value="Planks">Planks</Options>
         </Dropdown>
         Upload Image
         <UploadButtons upload={uploadHandler} uploadImage={imageHandler} image={image}/>

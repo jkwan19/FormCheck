@@ -27,7 +27,6 @@ function UploadButtons(props) {
         multiple
         type="file"
         name="image"
-        accept="image/png, image/jpeg"
         onChange={props.uploadImage}
       />
       <div>

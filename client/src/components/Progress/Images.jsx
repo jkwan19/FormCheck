@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   gridList: {
-    width: 600,
-    height: 450,
+    width: 'auto',
+    height: 'auto',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
   },
@@ -41,20 +41,19 @@ function Images(props) {
     return moment(date).calendar();
   }
   console.log(progressList, 'list')
-  if (progressList) {
+  if (progressList.length > 0) {
     return (
       <div className={classes.root}>
         <GridList cellHeight={200} spacing={1} className={classes.gridList}>
           {progressList.map((tile, index) => (
             <GridListTile key={`${tile.image}${index}`} cols={index === 0 ? 2 : 1} rows={index === 0 ? 2 : 1}>
-              <img src={tile.image.name} alt={tile.workout} />
+              <img src={tile.image} alt={tile.workout} />
               <GridListTileBar
                 title={tile.workout}
                 subtitle={toDate(tile.createdAt)}
                 titlePosition="top"
                 actionIcon={
                   <IconButton aria-label={`star ${tile.workout}`} className={classes.icon}>
-                    {/* <StarBorderIcon /> */}
                   </IconButton>
                 }
                 actionPosition="left"
@@ -65,8 +64,9 @@ function Images(props) {
         </GridList>
       </div>
     );
+  } else {
+    return <div>{'Loading.....'}</div>
   }
-  return <div>{'Loading.....'}</div>
 }
 
 export default Images;

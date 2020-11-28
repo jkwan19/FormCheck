@@ -1,7 +1,9 @@
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import axios from 'axios';
 import { shallow, mount } from 'enzyme';
 import renderer from 'react-test-renderer';
+import {render, cleanup, fireEvent, waitFor } from '@testing-library/react'
 
 // Components
 import App from '../components/FrontPage/App.jsx';
@@ -41,6 +43,24 @@ describe('App', () => {
     const wrapper = mount(<App />);
     expect(wrapper.find("images")).toHaveLength(0);
   });
+
+  // afterEach(cleanup);
+
+  // it('renders images correctly', async () => {
+  //   const wrapper = mount(<App />);
+  //   act(() => {
+  //     axios.get.mockResolvedValue({
+  //       data: [
+  //         { workout: 'Shoulders', image: 'test.jpeg' },
+  //         { workout: 'Planks', image: 'test.jpeg' },
+  //       ],
+  //     });
+  //   });
+  //   const { getByTestId, asFragment } = render(<App />);
+  //   const listNode = await getByTestId('images');
+  //   expect(listNode.children).toHaveLength(2);
+  //   expect(asFragment()).toMatchSnapshot();
+  // });
 })
 
 // Greeting Component
@@ -125,6 +145,10 @@ describe('Form Button', () => {
 
 //Progress Form Component
 describe('Progress Form', () => {
+  let options = [
+    {value: 'Shoulders'},
+    {value: 'Planks'}
+  ];
   test('should render Progress Form component', () => {
     const wrapper = shallow(
       <ProgressForm />
@@ -132,11 +156,31 @@ describe('Progress Form', () => {
     expect(wrapper.exists()).toBeTruthy();
     expect(wrapper).toMatchSnapshot();
   })
+  // it('Should simulate dropdown workout value change', async () => {
+  //   const workoutHandler = value => ({ currentTarget: { value }, target: { value } });
+  //   const wrapper = mount(<ProgressForm />);
+  //   wrapper.find('select').props().onChange(workoutHandler('Planks'));
+  //   await waitFor(() => {
+  //     expect(wrapper.render().find('select').val()).to.equal('Planks');
+  //   });
+  // })
+  test('should call onChange when option is selected', async () => {
+    const mockedOnChange = jest.fn();
+    const { getByText, queryByTestId } = render(<ProgressForm  options={options}
+        onChange={mockedOnChange} />);
 
-  it('Changing select button should call setState', () => {
-    const onChange = jest.fn();
-    const wrapper = mount(<ProgressForm onChange={onChange} value='Shoulders'/>);
-    wrapper.find('input').simulate('change');
-    expect(onChange).toBeCalledWith('Shoulders');
-  });
+    const mySelectComponent = queryByTestId('dropdown');
+
+    expect(mySelectComponent).toBeDefined();
+    expect(mySelectComponent).not.toBeNull();
+    expect(mockedOnChange).toHaveBeenCalledTimes(0);
+
+    fireEvent.keyDown(mySelectComponent.firstChild, { key: 'ArrowDown' });
+    await waitFor(() => getByText('Shoulders'));
+    fireEvent.click(getByText('Shoulders'));
+
+    expect(mockedOnChange).toHaveBeenCalledTimes(1);
+    expect(mockedOnChange).toHaveBeenCalledWith({value: 'Shoulders'});
+  })
+
 })

@@ -144,7 +144,7 @@ function App() {
         if (search && search !== '') {
           items = items.filter(item => item.workout === search)
         }
-        setProgress([...items]);
+        setProgress(items);
       })
       .catch((err) => console.log('err', err));
   };
@@ -160,14 +160,6 @@ function App() {
       setSearch(results);
     }
   }, [search]);
-
-  // useEffect (()=> {
-  //   getProgressList();
-  //   const results = progress.filter(data =>
-  //     data.workout.toLowerCase().includes(search)
-  //   );
-  //   setSearch(results);
-  // }, [search]);
 
   /* Add to progress tracker */
   const addToProgressList = (data) => {
@@ -277,7 +269,6 @@ function App() {
     return (
       <div>
         <Greeting />
-        <SearchBar id='filter' handleFilter={handleFilter} search={search}/>
         <Images id='images' progress={progress} />
       </div>
     );
@@ -307,6 +298,7 @@ function App() {
           <Typography variant="h6" noWrap>
             FormCheck
           </Typography>
+          <SearchBar id='filter' handleFilter={handleFilter} search={search}/>
         </Toolbar>
       </AppBar>
       <Drawer
