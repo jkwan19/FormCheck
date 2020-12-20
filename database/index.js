@@ -13,8 +13,11 @@ db.once('open', function() {
 });
 
 var progressSchema = new mongoose.Schema({
-  workout: {type: String, required: true},
-  image: {type: String, required: false}
+  workout: {type: String, required: false},
+  image: {
+    data: Buffer,
+    contentType: String
+  }
   },
   {
     timestamps: true

@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const morgan = require("morgan");
 const Progress = require('../database/index.js');
 const app = express();
 const cors = require('cors');
@@ -12,21 +13,37 @@ const destination = '/public/uploads';
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads')
+    cb(null, path.join(__dirname, `/../${destination}`))
   },
   filename: function (req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now())
   }
 })
 
-var upload = multer({ storage: storage })
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
 
-app.use(cors());
-// app.use(upload.single('image'));
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5
+  },
+  fileFilter: fileFilter
+});
+
+// app.use(cors());
+app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/../client/dist'));
+app.use(express.static(__dirname + `/../${destination}`));
 
+app.set("view engine", "ejs");
 
 app.get('/progress', function (req, res) {
   const selectAll = (callback) => {
@@ -48,25 +65,35 @@ app.get('/progress', function (req, res) {
   });
 });
 
+app.get('/upload', function(req, res){
+  res.json(data, 'test')
+});
 
-app.post('/upload-progress', upload.single('image'), function (req, res) {
-  console.log(req.file, req.body.workout, req.file.path)
-  if (!req.file) {
+app.post('/upload', upload.single('image'), function (req, res) {
+  const file = req.file
+  console.log(file, req.body.workout, 'test')
+  if (!file) {
     const error = new Error('Please upload a file')
     error.httpStatusCode = 400
     return next(error)
   }
-  const image = fs.readFileSync(req.file.path).toString('base64');
-  var finalImg = {
-    contentType: req.file.mimetype,
-    image:  new Buffer(image, 'base64')
+
+  let progressObj = {
+    workout: req.body.workout,
+    image: {
+      data: fs.readFileSync(path.join(__dirname + '/../public/uploads/' + file.filename)),
+      contentType: 'image/png'
+    }
   };
-  let progress = new Progress();
-  progress.workout = req.body.workout;
-  progress.image = finalImg;
-  progress.save()
-    .then((data) => res.status(200).json({ success: true, data: data }))
-    .catch((err) => res.status(400).json({ success: false, error: err }));
+  Progress.create(progressObj, (err, data) => {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      // item.save();
+      res.redirect('/');
+    }
+  });
 
 });
 

@@ -63,7 +63,7 @@ function ProgressForm(props) {
   return (
     <Wrapper>
       <GlobalStyles />
-      <Form method="POST" enctype="multipart/form-data" action="/upload-progress">
+      <Form method="POST" enctype="multipart/form-data" action="/upload">
         Workout:
         <Dropdown data-testid='dropdown' onChange={workoutHandler}>
           <Options id='Shoulders' value="Shoulders">Shoulders</Options>
