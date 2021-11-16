@@ -52,7 +52,7 @@
     "@tensorflow/tfjs": "^2.0.1",
     "@testing-library/react": "^11.1.2",
     "angular": "^1.6.3",
-    "aws-sdk": "^2.784.0",
+    "aws-sdk": "^2.814.0",
     "axios": "^0.19.2",
     "body-parser": "^1.17.2",
     "bootstrap": "^4.5.0",
